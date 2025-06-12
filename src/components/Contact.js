@@ -80,93 +80,79 @@ const Contact = () => {
             onSubmit={handleSubmit}
             className="space-y-6 bg-gray-800/50 p-8 rounded-xl shadow-xl"
           >
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-300 mb-2"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
-                placeholder="Your name"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-300 mb-2"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
-                placeholder="your.email@example.com"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-gray-300 mb-2"
-              >
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={form.message}
-                onChange={handleChange}
-                required
-                rows="5"
-                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-none"
-                placeholder="Your message..."
-              />
-            </div>
-
-            {error && (
-              <div className="text-red-400 text-sm bg-red-900/20 p-3 rounded-lg">
-                {error}
+            <div className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 hover:bg-gray-800/70"
+                  placeholder="Your name"
+                />
               </div>
-            )}
-
-            {success && (
-              <div className="text-green-400 text-sm bg-green-900/20 p-3 rounded-lg">
-                Message sent successfully! I'll get back to you soon.
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 hover:bg-gray-800/70"
+                  placeholder="your.email@example.com"
+                />
               </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className={`w-full flex items-center justify-center space-x-2 px-6 py-3 rounded-lg text-white font-medium transition-colors ${
-                loading
-                  ? 'bg-purple-700 cursor-not-allowed'
-                  : 'bg-purple-600 hover:bg-purple-700'
-              }`}
-            >
-              {loading ? (
-                <span>Sending...</span>
-              ) : (
-                <>
-                  <FaPaperPlane className="w-4 h-4" />
-                  <span>Send Message</span>
-                </>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  required
+                  rows="5"
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 hover:bg-gray-800/70 resize-none"
+                  placeholder="Your message..."
+                />
+              </div>
+              {error && (
+                <div className="text-red-400 text-sm bg-red-900/20 p-3 rounded-lg">
+                  {error}
+                </div>
               )}
-            </button>
+              {success && (
+                <div className="text-green-400 text-sm bg-green-900/20 p-3 rounded-lg">
+                  Message sent successfully! I'll get back to you soon.
+                </div>
+              )}
+              <motion.button
+                type="submit"
+                disabled={loading}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Sending...
+                  </div>
+                ) : (
+                  'Send Message'
+                )}
+              </motion.button>
+            </div>
           </form>
         </motion.div>
       </div>
