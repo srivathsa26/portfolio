@@ -10,39 +10,50 @@ const Hero = () => {
   ];
 
   return (
-    <section id="hero" className="min-h-screen flex items-center section-padding">
+    <section id="hero" className="min-h-screen flex items-center section-padding bg-gray-900/95">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
+          className="max-w-3xl"
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Hi, I'm <span className="text-gradient">SRIVATHSA SH</span>
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight text-white">
+            Transforming Ideas into <span className="text-gradient">Intelligent Solutions</span>
           </h1>
           
-          <motion.h2
-            className="text-2xl md:text-4xl font-bold mb-6 text-gray-300"
+          <motion.p
+            className="text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed font-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Computer Science Student & ML Enthusiast
-          </motion.h2>
+            Computer Science student and ML enthusiast crafting innovative AI solutions. 
+            Specializing in Deep Learning and Full Stack Development to build impactful applications.
+          </motion.p>
 
-          <motion.p
-            className="text-gray-400 text-lg md:text-xl max-w-2xl mb-8"
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            A passionate Computer Science student at Global Academy of Technology, specializing in Machine Learning,
-            Deep Learning, and Full Stack Development. Currently pursuing my Bachelor's in Computer Science & Engineering
-            with a focus on AI/ML applications and web development.
-          </motion.p>
+            <a
+              href="#projects"
+              className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity text-center shadow-lg"
+            >
+              View My Projects
+            </a>
+            <a
+              href="#contact"
+              className="inline-block border-2 border-purple-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-purple-600/20 transition-colors text-center"
+            >
+              Get in Touch
+            </a>
+          </motion.div>
 
           <motion.div
-            className="flex space-x-4"
+            className="flex space-x-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
@@ -53,25 +64,11 @@ const Hero = () => {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-300 hover:text-white transition-colors"
               >
-                <social.icon className="w-6 h-6" />
+                <social.icon className="w-7 h-7" />
               </a>
             ))}
-          </motion.div>
-
-          <motion.div
-            className="mt-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-          >
-            <a
-              href="#contact"
-              className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full font-medium hover:opacity-90 transition-opacity"
-            >
-              Get in Touch
-            </a>
           </motion.div>
         </motion.div>
       </div>

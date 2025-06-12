@@ -1,31 +1,57 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
+import emailjs from '@emailjs/browser';
+import { FaPaperPlane } from 'react-icons/fa';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your form submission logic here
-    console.log('Form submitted:', formData);
-  };
+  const formRef = useRef();
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setSuccess(false);
+
+    try {
+      // Replace these with your EmailJS credentials
+      await emailjs.sendForm(
+        'YOUR_SERVICE_ID',
+        'YOUR_TEMPLATE_ID',
+        formRef.current,
+        'YOUR_PUBLIC_KEY'
+      );
+
+      setSuccess(true);
+      setForm({
+        name: '',
+        email: '',
+        message: '',
+      });
+    } catch (error) {
+      setError('Failed to send message. Please try again later.');
+      console.error('Error sending email:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const socialLinks = [
@@ -36,105 +62,112 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="section-padding">
+    <section id="contact" className="section-padding bg-gray-900/95">
       <div className="container-custom">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
+          className="max-w-2xl mx-auto"
         >
-          <h2 className="heading-secondary mb-12">
+          <h2 className="heading-secondary mb-12 text-white">
             Get in <span className="text-gradient">Touch</span>
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-12">
+          <form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            className="space-y-6 bg-gray-800/50 p-8 rounded-xl shadow-xl"
+          >
             <div>
-              <p className="text-gray-300 mb-8">
-                I'm currently pursuing my Bachelor's in Computer Science & Engineering at Global Academy of Technology.
-                I'm open to internships and research opportunities in Machine Learning, Deep Learning, and Full Stack Development.
-                Feel free to reach out if you'd like to collaborate or have any questions!
-              </p>
-
-              <div className="space-y-6">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center text-gray-300 hover:text-white transition-colors"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <social.icon className="w-6 h-6 mr-4" />
-                    <span>{social.label}</span>
-                  </motion.a>
-                ))}
-              </div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-300 mb-2"
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
+                placeholder="Your name"
+              />
             </div>
 
-            <motion.form
-              onSubmit={handleSubmit}
-              className="space-y-6"
-              initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5 }}
-            >
-              <div>
-                <label htmlFor="name" className="block text-gray-300 mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 text-white"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-gray-300 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 text-white"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-gray-300 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows="4"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 text-white"
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity"
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-300 mb-2"
               >
-                Send Message
-              </button>
-            </motion.form>
-          </div>
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
+                placeholder="your.email@example.com"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-gray-300 mb-2"
+              >
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                required
+                rows="5"
+                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-none"
+                placeholder="Your message..."
+              />
+            </div>
+
+            {error && (
+              <div className="text-red-400 text-sm bg-red-900/20 p-3 rounded-lg">
+                {error}
+              </div>
+            )}
+
+            {success && (
+              <div className="text-green-400 text-sm bg-green-900/20 p-3 rounded-lg">
+                Message sent successfully! I'll get back to you soon.
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className={`w-full flex items-center justify-center space-x-2 px-6 py-3 rounded-lg text-white font-medium transition-colors ${
+                loading
+                  ? 'bg-purple-700 cursor-not-allowed'
+                  : 'bg-purple-600 hover:bg-purple-700'
+              }`}
+            >
+              {loading ? (
+                <span>Sending...</span>
+              ) : (
+                <>
+                  <FaPaperPlane className="w-4 h-4" />
+                  <span>Send Message</span>
+                </>
+              )}
+            </button>
+          </form>
         </motion.div>
       </div>
     </section>
