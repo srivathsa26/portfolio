@@ -1,56 +1,44 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
-import { FaPaperPlane } from 'react-icons/fa';
 
 const Contact = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
   const formRef = useRef();
-  const [form, setForm] = useState({
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: '',
+    message: ''
   });
-  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setIsSubmitting(true);
     setError('');
-    setSuccess(false);
 
     try {
-      // Replace these with your EmailJS credentials
       await emailjs.sendForm(
         'YOUR_SERVICE_ID',
         'YOUR_TEMPLATE_ID',
         formRef.current,
         'YOUR_PUBLIC_KEY'
       );
-
       setSuccess(true);
-      setForm({
-        name: '',
-        email: '',
-        message: '',
-      });
-    } catch (error) {
-      setError('Failed to send message. Please try again later.');
-      console.error('Error sending email:', error);
+      setFormData({ name: '', email: '', message: '' });
+    } catch (err) {
+      setError('Failed to send message. Please try again.');
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -62,24 +50,29 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="section-padding bg-gray-900/95">
-      <div className="container-custom">
+    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900">
+      <div className="max-w-7xl mx-auto">
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Get in Touch
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Have a question or want to work together? Feel free to reach out!
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="max-w-2xl mx-auto"
         >
-          <h2 className="heading-secondary mb-12 text-white">
-            Get in <span className="text-gradient">Touch</span>
-          </h2>
-
-          <form
-            ref={formRef}
-            onSubmit={handleSubmit}
-            className="space-y-6 bg-gray-800/50 p-8 rounded-xl shadow-xl"
-          >
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
@@ -89,10 +82,10 @@ const Contact = () => {
                   type="text"
                   id="name"
                   name="name"
-                  value={form.name}
+                  value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 hover:bg-gray-800/70"
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Your name"
                 />
               </div>
@@ -104,10 +97,10 @@ const Contact = () => {
                   type="email"
                   id="email"
                   name="email"
-                  value={form.email}
+                  value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 hover:bg-gray-800/70"
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -118,41 +111,34 @@ const Contact = () => {
                 <textarea
                   id="message"
                   name="message"
-                  value={form.message}
+                  value={formData.message}
                   onChange={handleChange}
                   required
                   rows="5"
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 hover:bg-gray-800/70 resize-none"
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
                   placeholder="Your message..."
                 />
               </div>
-              {error && (
-                <div className="text-red-400 text-sm bg-red-900/20 p-3 rounded-lg">
-                  {error}
-                </div>
-              )}
-              {success && (
-                <div className="text-green-400 text-sm bg-green-900/20 p-3 rounded-lg">
-                  Message sent successfully! I'll get back to you soon.
-                </div>
-              )}
-              <motion.button
+              <button
                 type="submit"
-                disabled={loading}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSubmitting}
+                className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Sending...
-                  </div>
-                ) : (
-                  'Send Message'
-                )}
-              </motion.button>
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+              </button>
             </div>
+
+            {error && (
+              <div className="text-red-400 text-sm bg-red-900/20 p-3 rounded-lg">
+                {error}
+              </div>
+            )}
+
+            {success && (
+              <div className="text-green-400 text-sm bg-green-900/20 p-3 rounded-lg">
+                Message sent successfully! I'll get back to you soon.
+              </div>
+            )}
           </form>
         </motion.div>
       </div>
