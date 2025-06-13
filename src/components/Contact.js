@@ -28,15 +28,16 @@ const Contact = () => {
 
     try {
       await emailjs.sendForm(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
+        'service_z2u88jf', // Replace with your EmailJS service ID
+        'template_zdfxbbv', // Replace with your EmailJS template ID
         formRef.current,
-        'YOUR_PUBLIC_KEY'
+        'f0FaakF6LwYXRO9zY' // Replace with your EmailJS public key
       );
       setSuccess(true);
       setFormData({ name: '', email: '', message: '' });
     } catch (err) {
       setError('Failed to send message. Please try again.');
+      console.error('EmailJS Error:', err);
     } finally {
       setIsSubmitting(false);
     }
@@ -58,7 +59,7 @@ const Contact = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
             Get in Touch
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
@@ -73,73 +74,86 @@ const Contact = () => {
           className="max-w-2xl mx-auto"
         >
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  placeholder="Your name"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows="5"
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
-                  placeholder="Your message..."
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </button>
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                placeholder="Your name"
+              />
             </div>
-
-            {error && (
-              <div className="text-red-400 text-sm bg-red-900/20 p-3 rounded-lg">
-                {error}
-              </div>
-            )}
-
-            {success && (
-              <div className="text-green-400 text-sm bg-green-900/20 p-3 rounded-lg">
-                Message sent successfully! I'll get back to you soon.
-              </div>
-            )}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                placeholder="your.email@example.com"
+              />
+            </div>
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                rows="5"
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                placeholder="Your message..."
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </button>
           </form>
+
+          {error && (
+            <div className="mt-4 text-red-400 text-sm bg-red-900/20 p-3 rounded-lg">
+              {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="mt-4 text-green-400 text-sm bg-green-900/20 p-3 rounded-lg">
+              Message sent successfully! I'll get back to you soon.
+            </div>
+          )}
+
+          <div className="mt-12 flex justify-center gap-6">
+            {socialLinks.map((link, index) => (
+              <a
+                key={index}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-purple-400 active:text-purple-500 transition-colors duration-200 p-2 rounded-full hover:bg-gray-800/50 active:bg-gray-800/70"
+                aria-label={link.label}
+              >
+                <link.icon className="w-6 h-6" />
+              </a>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
