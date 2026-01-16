@@ -1,34 +1,22 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
-import { 
-  SiPython, 
-  SiTensorflow, 
-  SiPytorch, 
-  SiJavascript, 
-  SiReact, 
-  SiNodedotjs, 
-  SiMongodb, 
-  SiSelenium,
-  SiTailwindcss,
-  SiHtml5,
-  SiCss3,
-  SiGit,
-  SiDocker,
-  SiTypescript,
-  SiNextdotjs,
-  SiExpress,
-  SiPostgresql,
-  SiMysql,
-  SiRedux,
-  SiFirebase,
-  SiAmazonaws,
-  SiGooglecloud,
+import { FaGithub } from 'react-icons/fa';
+import {
+  SiPython,
+  SiTensorflow,
+  SiPytorch,
+  SiReact,
+  SiNodedotjs,
+  SiMongodb,
   SiOpencv,
   SiNumpy,
   SiPandas,
-  SiScikitlearn
-} from 'react-icons/si';
+  SiScikitlearn,
+  SiHtml5,
+  SiCss3,
+  SiTailwindcss,
+  SiExpress
+} from "react-icons/si";
 
 const Projects = () => {
   const [showAll, setShowAll] = useState(false);
