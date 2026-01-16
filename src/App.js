@@ -9,7 +9,7 @@ import Contact from './components/Contact';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-900">
+    <motion.div className="min-h-screen bg-gray-900">
       <CustomCursor />
       <Navbar />
       
@@ -24,7 +24,7 @@ function App() {
       <footer className="py-8 text-center text-gray-400">
         <p>© {new Date().getFullYear()} Your Name. All rights reserved.</p>
       </footer>
-    </div>
+    </motion.div>
   );
 }
 
