@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaExternalLinkAlt } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 
 const Contact = () => {
@@ -47,7 +47,7 @@ const Contact = () => {
     { icon: FaGithub, url: 'https://github.com/srivathsa26', label: 'GitHub' },
     { icon: FaLinkedin, url: 'https://www.linkedin.com/in/srivathsa-shrihari-BE-CSE', label: 'LinkedIn' },
     { icon: FaEnvelope, url: 'mailto:Srivathsash26@gmail.com', label: 'Email' },
-    { icon: FaPhone, url: 'tel:6363689505', label: 'Phone' },
+    { icon: FaExternalLinkAlt, url: 'https://portfolio-six-mu-62.vercel.app', label: 'Portfolio' },
   ];
 
   return (
