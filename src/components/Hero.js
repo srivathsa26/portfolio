@@ -51,12 +51,20 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-lg sm:text-xl text-gray-300 mb-8 leading-relaxed"
+              className="text-lg sm:text-xl text-gray-300 mb-8 leading-relaxed max-w-2xl"
             >
-              A passionate <span className="text-purple-400 font-semibold">Full Stack Developer</span> and <span className="text-pink-400 font-semibold">Machine Learning Engineer</span>
+              <span className="text-purple-400 font-semibold">Full Stack Developer</span> focused on building scalable web applications and API-driven systems. I work across frontend and backend stacks using <span className="text-pink-400 font-semibold">JavaScript, Python, React.js, Next.js, Node.js, REST APIs, MongoDB, PostgreSQL, and Docker.</span>
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.55 }}
+              className="text-gray-400 mb-10 max-w-2xl text-sm sm:text-base leading-relaxed"
+            >
+              Currently at <span className="text-purple-400">Geekonomy Technology</span>, contributing to API integrations and frontend engineering. Previously a <span className="text-pink-400">Deep Learning Research Intern at DRDO</span>, working on aircraft detection systems.
             </motion.p>
 
-            <div className="flex flex-col items-center md:items-start gap-8">
+            <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 sm:gap-6 mb-8">
               <motion.a
                 href="#projects"
                 initial={{ opacity: 0, y: 20 }}
@@ -64,11 +72,25 @@ const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.6 }}
                 whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(147, 51, 234, 0.4)" }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold overflow-hidden shadow-lg shadow-purple-500/50 transition-all duration-300"
+                className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold overflow-hidden shadow-lg shadow-purple-500/50 transition-all duration-300 w-full sm:w-auto text-center"
               >
                 <span className="relative z-10">View My Work</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </motion.a>
+
+              <motion.a
+                href="/Srivathsa_resume_FSD.pdf"
+                download="Srivathsa_Resume.pdf"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.65 }}
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(168, 85, 247, 0.1)" }}
+                whileTap={{ scale: 0.98 }}
+                className="px-8 py-4 border-2 border-purple-500/50 text-purple-400 rounded-xl font-semibold backdrop-blur-sm transition-all duration-300 hover:border-purple-500 w-full sm:w-auto text-center flex items-center justify-center gap-2"
+              >
+                Download Resume
+              </motion.a>
+            </div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -95,7 +117,6 @@ const Hero = () => {
                   </motion.a>
                 ))}
               </motion.div>
-            </div>
           </motion.div>
 
           <motion.div
