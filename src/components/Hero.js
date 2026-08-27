@@ -1,154 +1,174 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from 'motion/react';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { Magnetic } from './motion-primitives/magnetic';
+import { TextEffect } from './motion-primitives/text-effect';
+import { Tilt } from './motion-primitives/tilt';
+import { TextShimmer } from './motion-primitives/text-shimmer';
+import { easeOut, stagger, fadeUp } from '../lib/motion';
 
 const Hero = () => {
+  const sectionRef = useRef(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const photoY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 90]);
+  const photoScale = useTransform(scrollYProgress, [0, 1], reduce ? [1, 1] : [1, 1.1]);
+  const blobY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -60]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, reduce ? 1 : 0.35]);
+
+  const socials = [
+    { icon: FaEnvelope, href: 'mailto:Srivathsash26@gmail.com', label: 'Email' },
+    { icon: FaGithub, href: 'https://github.com/srivathsa26', label: 'GitHub' },
+    { icon: FaLinkedin, href: 'https://www.linkedin.com/in/srivathsa-shrihari-BE-CSE', label: 'LinkedIn' },
+  ];
+
   return (
-    <motion.section id="home" className="relative min-h-screen flex items-center py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 overflow-hidden">
-      {/* Animated background gradient orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    <section
+      id="home"
+      ref={sectionRef}
+      className="relative min-h-[100dvh] overflow-hidden"
+    >
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute inset-0 bg-canvas" />
+        <motion.div
+          style={{ y: blobY }}
+          className="absolute -top-24 right-[-10%] h-[70vh] w-[70vw] rounded-full bg-accent/[0.07] blur-3xl anim-float"
+        />
+        <div className="absolute bottom-[-20%] left-[-15%] h-[55vh] w-[55vw] rounded-full bg-ink/[0.04] blur-3xl anim-float-slow" />
+        <div
+          className="absolute inset-0 opacity-[0.35]"
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, rgba(12,12,14,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(12,12,14,0.04) 1px, transparent 1px)',
+            backgroundSize: '64px 64px',
+            maskImage: 'radial-gradient(ellipse 80% 70% at 50% 40%, black, transparent)',
+          }}
+        />
       </div>
 
-      <div className="relative max-w-7xl mx-auto w-full z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-center md:text-left"
+      <motion.div
+        style={{ opacity: contentOpacity }}
+        className="container-custom relative z-10 grid min-h-[100dvh] grid-cols-1 lg:grid-cols-12 gap-12 items-center py-28 md:py-32"
+      >
+        <motion.div
+          className="lg:col-span-7"
+          variants={stagger(0.1, 0.05)}
+          initial={reduce ? false : 'hidden'}
+          animate="show"
+        >
+          <motion.div variants={fadeUp} className="mb-6">
+            {reduce ? (
+              <p className="eyebrow">Full stack developer, Bengaluru</p>
+            ) : (
+              <TextShimmer as="p" className="eyebrow" duration={2.4}>
+                Full stack developer, Bengaluru
+              </TextShimmer>
+            )}
+          </motion.div>
+
+          {reduce ? (
+            <h1 className="display text-5xl sm:text-6xl md:text-7xl lg:text-[5.75rem] leading-[1.05] pb-1 mb-7 max-w-[11ch]">
+              Srivathsa SH
+            </h1>
+          ) : (
+            <TextEffect
+              as="h1"
+              per="char"
+              preset="fade-in-blur"
+              className="display text-5xl sm:text-6xl md:text-7xl lg:text-[5.75rem] leading-[1.05] pb-1 mb-7 max-w-[11ch]"
+              speedReveal={1.15}
+            >
+              Srivathsa SH
+            </TextEffect>
+          )}
+
+          <motion.p
+            variants={fadeUp}
+            className="text-mute text-lg md:text-xl leading-relaxed max-w-[38ch] mb-10"
+          >
+            Building scalable web apps and API-driven systems with React, Next.js, Node.js, and AI-assisted workflows.
+          </motion.p>
+
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mb-10">
+            <Magnetic intensity={0.35} range={120}>
+              <a href="#projects" className="btn-primary">
+                View selected work
+              </a>
+            </Magnetic>
+            <Magnetic intensity={0.35} range={120}>
+              <a
+                href="/Srivathsa_resume_FSD__25_aug.pdf"
+                download="Srivathsa_Resume.pdf"
+                className="btn-ghost"
+              >
+                Download resume
+              </a>
+            </Magnetic>
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="flex gap-3">
+            {socials.map((social, i) => (
+              <Magnetic key={social.label} intensity={0.45} range={90}>
+                <motion.a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  initial={reduce ? false : { opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.45 + i * 0.06, duration: 0.4, ease: easeOut }}
+                  whileHover={reduce ? undefined : { y: -3 }}
+                  whileTap={reduce ? undefined : { scale: 0.96 }}
+                  className="inline-flex p-3 rounded-xl border border-ink/10 bg-surface text-mute hover:text-accent hover:border-accent/40 shadow-soft transition-colors duration-200"
+                >
+                  <social.icon className="w-5 h-5" />
+                </motion.a>
+              </Magnetic>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          initial={reduce ? false : { opacity: 0, scale: 0.94, y: 28 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.85, delay: 0.2, ease: easeOut }}
+          className="lg:col-span-5 flex justify-center lg:justify-end"
+        >
+          <Tilt
+            rotationFactor={reduce ? 0 : 8}
+            className="relative w-full max-w-md aspect-[4/5]"
           >
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-block mb-4 px-4 py-2 bg-purple-500/10 border border-purple-500/30 rounded-full backdrop-blur-sm"
-            >
-              <span className="text-purple-400 text-sm font-medium">Welcome to my Portfolio</span>
-            </motion.div>
-            
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-              <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="text-white block"
-              >
-                Hi, I'm
-              </motion.span>
-              <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent tracking-wide block mt-2"
-              >
-                SRIVATHSA SH
-              </motion.span>
-            </h1>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-lg sm:text-xl text-gray-300 mb-8 leading-relaxed max-w-2xl"
-            >
-              <span className="text-purple-400 font-semibold">Full Stack Developer</span> focused on building scalable web applications and API-driven systems. I work across frontend and backend stacks using <span className="text-pink-400 font-semibold">JavaScript, Python, React.js, Next.js, Node.js, REST APIs, MongoDB, PostgreSQL, and Docker.</span>
-            </motion.p>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.55 }}
-              className="text-gray-400 mb-10 max-w-2xl text-sm sm:text-base leading-relaxed"
-            >
-              Currently at <span className="text-purple-400">Geekonomy Technology</span>, contributing to API integrations and frontend engineering. Previously a <span className="text-pink-400">Deep Learning Research Intern at DRDO</span>, working on aircraft detection systems.
-            </motion.p>
-
-            <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 sm:gap-6 mb-8">
-              <motion.a
-                href="#projects"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(147, 51, 234, 0.4)" }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold overflow-hidden shadow-lg shadow-purple-500/50 transition-all duration-300 w-full sm:w-auto text-center"
-              >
-                <span className="relative z-10">View My Work</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </motion.a>
-
-              <motion.a
-                href="/Srivathsa_resume_FSD.pdf"
-                download="Srivathsa_Resume.pdf"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.65 }}
-                whileHover={{ scale: 1.05, backgroundColor: "rgba(168, 85, 247, 0.1)" }}
-                whileTap={{ scale: 0.98 }}
-                className="px-8 py-4 border-2 border-purple-500/50 text-purple-400 rounded-xl font-semibold backdrop-blur-sm transition-all duration-300 hover:border-purple-500 w-full sm:w-auto text-center flex items-center justify-center gap-2"
-              >
-                Download Resume
-              </motion.a>
+              aria-hidden="true"
+              className="absolute -inset-3 rounded-3xl border border-accent/20"
+              initial={reduce ? false : { opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9, delay: 0.35, ease: easeOut }}
+            />
+            <div className="relative h-full w-full overflow-hidden rounded-2xl border border-ink/[0.06] shadow-soft bg-surface">
+              <motion.img
+                src="/srivathsa photo.jpg"
+                alt="Srivathsa SH"
+                className="h-full w-full object-cover will-change-transform"
+                loading="eager"
+                style={{ y: photoY, scale: photoScale }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent pointer-events-none" />
             </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="flex gap-6"
-              >
-                {[
-                  { icon: FaEnvelope, href: "mailto:Srivathsash26@gmail.com", label: "Email" },
-                  { icon: FaGithub, href: "https://github.com/srivathsa26", label: "GitHub" },
-                  { icon: FaLinkedin, href: "https://www.linkedin.com/in/srivathsa-shrihari-BE-CSE", label: "LinkedIn" }
-                ].map((social, index) => (
-                  <motion.a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.2, y: -5 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="relative p-4 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl text-gray-400 hover:text-purple-400 transition-all duration-300 hover:border-purple-500/50 hover:bg-purple-500/10 hover:shadow-lg hover:shadow-purple-500/20"
-                    aria-label={social.label}
-                  >
-                    <social.icon className="w-6 h-6" />
-                  </motion.a>
-                ))}
-              </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex justify-center md:justify-end relative"
-          >
-            <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
-              {/* Gradient ring */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 opacity-20 blur-2xl animate-pulse"></div>
-              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-purple-600/30 to-pink-600/30 backdrop-blur-sm"></div>
-              
-              {/* Profile image */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-                className="relative w-full h-full rounded-full overflow-hidden border-4 border-purple-500/30 shadow-2xl shadow-purple-500/20"
-              >
-                <img
-                  src="/srivathsa photo.jpg"
-                  alt="SRIVATHSA SH"
-                  className="w-full h-full object-cover"
-                  loading="eager"
-                />
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </motion.section>
+          </Tilt>
+        </motion.div>
+      </motion.div>
+    </section>
   );
 };
 
-export default Hero; 
+export default Hero;

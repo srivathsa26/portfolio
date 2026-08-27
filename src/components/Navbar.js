@@ -1,212 +1,157 @@
 import React, { useState, useEffect } from 'react';
-import { FaBars, FaTimes, FaChevronRight } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useMotionValueEvent,
+  useReducedMotion,
+} from 'motion/react';
+import { Magnetic } from './motion-primitives/magnetic';
+
+const SECTION_IDS = ['home', 'about', 'skills', 'experience', 'projects', 'contact'];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    setScrolled(y > 24);
+  });
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'about', 'skills', 'experience', 'projects', 'contact'];
-      const scrollPosition = window.scrollY + 100;
+    const elements = SECTION_IDS.map((id) => document.getElementById(id)).filter(Boolean);
+    if (!elements.length) return undefined;
 
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
-          }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]?.target?.id) {
+          setActiveSection(visible[0].target.id);
         }
-      }
+      },
+      { rootMargin: '-35% 0px -45% 0px', threshold: [0.15, 0.35, 0.55] }
+    );
 
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   const navLinks = [
-    { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'skills', label: 'Skills' },
     { id: 'experience', label: 'Experience' },
-    { id: 'projects', label: 'Projects' },
+    { id: 'projects', label: 'Work' },
     { id: 'contact', label: 'Contact' },
   ];
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const offset = 80; // Account for fixed header
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
+      const offset = 80;
       window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
+        top: element.getBoundingClientRect().top + window.pageYOffset - offset,
+        behavior: 'smooth',
       });
     }
     setIsOpen(false);
   };
 
-  const menuVariants = {
-    closed: {
-      opacity: 0,
-      x: "100%",
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut"
-      }
-    },
-    open: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut"
-      }
-    }
-  };
-
-  const linkVariants = {
-    closed: { opacity: 0, x: 20 },
-    open: (i) => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.3
-      }
-    })
-  };
-
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      scrolled ? 'bg-gray-900/80 backdrop-blur-md shadow-xl border-b border-purple-500/10' : 'bg-transparent'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex-shrink-0"
+    <motion.nav
+      initial={reduce ? false : { y: -24, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-canvas/85 backdrop-blur-xl border-b border-ink/[0.06]'
+          : 'bg-transparent'
+      }`}
+    >
+      <div className="container-custom flex h-20 items-center justify-between">
+        <Magnetic intensity={0.25} range={80}>
+          <button
+            type="button"
+            onClick={() => scrollToSection('home')}
+            className="font-display text-xl font-semibold tracking-tight text-ink"
           >
-            <span className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent tracking-wide">
-              SRIVATHSA SH
-            </span>
-          </motion.div>
+            Srivathsa
+          </button>
+        </Magnetic>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-8">
-              {navLinks.map((link) => (
-                <motion.button
-                  key={link.id}
-                  onClick={() => scrollToSection(link.id)}
-                  className={`relative px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                    activeSection === link.id
-                      ? 'text-purple-400'
-                      : 'text-gray-300 hover:text-purple-400'
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {link.label}
-                  {activeSection === link.id && (
-                    <motion.div
-                      layoutId="activeSection"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
-                      initial={false}
-                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    />
-                  )}
-                </motion.button>
-              ))}
-            </div>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <motion.button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-300 hover:text-purple-400 focus:outline-none"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+        <div className="hidden md:flex items-center gap-1">
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              type="button"
+              onClick={() => scrollToSection(link.id)}
+              className={`relative px-3.5 py-2 text-sm font-medium transition-colors duration-200 ${
+                activeSection === link.id ? 'text-ink' : 'text-mute hover:text-ink'
+              }`}
             >
-              {isOpen ? (
-                <FaTimes className="h-6 w-6" />
-              ) : (
-                <FaBars className="h-6 w-6" />
+              {link.label}
+              {activeSection === link.id && (
+                <motion.span
+                  layoutId="nav-active"
+                  className="absolute inset-x-2 -bottom-0.5 h-[2px] rounded-full bg-accent"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
               )}
-            </motion.button>
-          </div>
+            </button>
+          ))}
+          <Magnetic className="ml-4" intensity={0.3} range={100}>
+            <a href="#contact" className="btn-primary !py-2.5 !px-4 text-xs">
+              Hire me
+            </a>
+          </Magnetic>
         </div>
+
+        <button
+          type="button"
+          className="md:hidden text-ink p-2"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+        >
+          {isOpen ? <FaTimes className="h-5 w-5" /> : <FaBars className="h-5 w-5" />}
+        </button>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={menuVariants}
-            className="md:hidden fixed inset-y-0 right-0 w-64 bg-gray-900/95 backdrop-blur-sm shadow-xl"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="md:hidden overflow-hidden border-t border-ink/[0.06] bg-canvas/95 backdrop-blur-xl"
           >
-            <div className="pt-20 pb-6 px-4 space-y-4">
+            <div className="container-custom py-6 flex flex-col gap-1">
               {navLinks.map((link, i) => (
                 <motion.button
                   key={link.id}
-                  custom={i}
-                  variants={linkVariants}
-                  initial="closed"
-                  animate="open"
-                  exit="closed"
+                  type="button"
+                  initial={reduce ? false : { opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
                   onClick={() => scrollToSection(link.id)}
-                  className={`w-full flex items-center justify-between px-4 py-3 text-base font-medium rounded-lg transition-colors duration-200 ${
-                    activeSection === link.id
-                      ? 'bg-purple-500/10 text-purple-400'
-                      : 'text-gray-300 hover:bg-gray-800 hover:text-purple-400'
+                  className={`text-left py-3 text-base font-medium ${
+                    activeSection === link.id ? 'text-accent' : 'text-mute'
                   }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                 >
                   {link.label}
-                  <FaChevronRight className={`w-4 h-4 transition-transform duration-200 ${
-                    activeSection === link.id ? 'rotate-90' : ''
-                  }`} />
                 </motion.button>
               ))}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Scroll Indicators */}
-      <div className="fixed bottom-4 right-4 hidden md:flex flex-col items-center space-y-2">
-        {navLinks.map((link) => (
-          <motion.button
-            key={link.id}
-            onClick={() => scrollToSection(link.id)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              activeSection === link.id
-                ? 'bg-purple-500 scale-125'
-                : 'bg-gray-500 hover:bg-purple-400'
-            }`}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-          />
-        ))}
-      </div>
-    </nav>
+    </motion.nav>
   );
 };
 
-export default Navbar; 
+export default Navbar;
