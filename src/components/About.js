@@ -1,137 +1,146 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { FaGraduationCap, FaCode, FaTools } from 'react-icons/fa';
+import { motion, useReducedMotion } from 'motion/react';
+import { fadeUp, stagger } from '../lib/motion';
 
 const About = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  const reduce = useReducedMotion();
+
+  const whatIDo = [
+    'Building React.js & Next.js apps',
+    'Integrating REST APIs & services',
+    'Debugging request-response issues',
+    'Developing scalable systems',
+    'Database work (Mongo, Postgres)',
+  ];
 
   const whatIBring = [
-    "Strong debugging and problem-solving skills",
-    "Practical experience with API integrations and workflow systems",
-    "Ability to work across frontend and backend stacks",
-    "AI-assisted development",
-    "Experience building maintainable and reusable component systems",
-    "Understanding of performance optimization and structured development workflows"
+    'Strong debugging and problem-solving',
+    'API integrations and workflow systems',
+    'Cross-stack frontend and backend work',
+    'AI-assisted development',
+    'Reusable component systems',
+    'Performance-minded workflows',
   ];
 
   const certifications = [
-    "Deep Learning & Applications",
-    "Intro to Generative AI",
-    "Prompt Design using Google Vertex AI"
+    'Deep Learning & Applications',
+    'Intro to Generative AI',
+    'Prompt Design using Google Vertex AI',
   ];
 
-  return (
-    <section id="about" className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-900/95 to-gray-900 overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl"></div>
-      </div>
+  const listItem = {
+    hidden: { opacity: 0, x: -12 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
 
-      <div className="relative max-w-7xl mx-auto z-10">
+  return (
+    <section id="about" className="section-pad border-t border-ink/[0.06]">
+      <div className="container-custom">
         <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          variants={stagger(0.1)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid lg:grid-cols-12 gap-14 lg:gap-20"
         >
-          <div className="text-center mb-16">
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="inline-block mb-4 px-4 py-2 bg-purple-500/10 border border-purple-500/30 rounded-full backdrop-blur-sm"
+          <div className="lg:col-span-5">
+            <motion.p variants={fadeUp} className="eyebrow mb-5">
+              About
+            </motion.p>
+            <motion.h2
+              variants={fadeUp}
+              className="display text-4xl md:text-5xl mb-6 leading-[1.05]"
             >
-              <span className="text-purple-400 text-sm font-medium">Get to Know Me</span>
-            </motion.span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
-              About <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Me</span>
-            </h2>
-            <div className="text-gray-400 text-lg max-w-4xl mx-auto space-y-4">
+              Software engineer from Bengaluru
+            </motion.h2>
+            <motion.div
+              variants={fadeUp}
+              className="space-y-4 text-mute leading-relaxed max-w-[40ch] text-[17px]"
+            >
+              <p>Hands-on experience in full-stack development and AI-assisted systems.</p>
               <p>
-                I'm a Software Engineer from Bengaluru with hands-on experience in full-stack development and AI-assisted systems.
+                Currently at{' '}
+                <span className="text-ink font-medium">Geekonomy Technology</span>, contributing to
+                API integrations and frontend engineering: integrations, debugging, and performance.
               </p>
-              <p>
-                Currently, I'm working at <span className="text-purple-400 font-semibold">Geekonomy Technology</span>, where I contribute to API integrations and frontend engineering. I enjoy solving real engineering problems involving integrations, debugging, and performance optimization.
-              </p>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* What I Do Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="relative bg-gray-800/40 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 hover:border-purple-500/50 shadow-xl transition-all duration-300 group"
-            >
-              <div className="flex items-center mb-4">
-                <FaCode className="w-6 h-6 text-purple-400 mr-3" />
-                <h3 className="text-xl font-bold text-white">What I Do</h3>
-              </div>
-              <ul className="space-y-3">
-                {[
-                  "Building React.js & Next.js apps",
-                  "Integrating REST APIs & services",
-                  "Debugging request-response issues",
-                  "Developing scalable systems",
-                  "Database work (Mongo, Postgres)"
-                ].map((item, i) => (
-                  <li key={i} className="text-gray-300 flex items-start gap-2 text-sm">
-                    <span className="text-purple-400 font-bold">•</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+          <div className="lg:col-span-7 space-y-10">
+            <div className="grid sm:grid-cols-2 gap-10">
+              <motion.div variants={fadeUp}>
+                <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent mb-5">
+                  What I do
+                </h3>
+                <motion.ul
+                  variants={stagger(0.05)}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  className="space-y-3.5"
+                >
+                  {whatIDo.map((item) => (
+                    <motion.li
+                      key={item}
+                      variants={listItem}
+                      className="text-mute text-[15px] leading-relaxed border-l-2 border-ink/10 pl-4 hover:border-accent/50 transition-colors duration-300"
+                    >
+                      {item}
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </motion.div>
+              <motion.div variants={fadeUp}>
+                <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent mb-5">
+                  What I bring
+                </h3>
+                <motion.ul
+                  variants={stagger(0.05)}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  className="space-y-3.5"
+                >
+                  {whatIBring.map((item) => (
+                    <motion.li
+                      key={item}
+                      variants={listItem}
+                      className="text-mute text-[15px] leading-relaxed border-l-2 border-ink/10 pl-4 hover:border-accent/50 transition-colors duration-300"
+                    >
+                      {item}
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </motion.div>
+            </div>
 
-            {/* Why Work With Me Card */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="relative bg-gray-800/40 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 hover:border-purple-500/50 shadow-xl transition-all duration-300 group"
+              variants={fadeUp}
+              whileHover={reduce ? undefined : { y: -4 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+              className="panel p-8 grid sm:grid-cols-2 gap-8"
             >
-              <div className="flex items-center mb-4">
-                <FaTools className="w-6 h-6 text-pink-400 mr-3" />
-                <h3 className="text-xl font-bold text-white">What I Bring</h3>
-              </div>
-              <ul className="space-y-3">
-                {whatIBring.map((item, i) => (
-                  <li key={i} className="text-gray-300 flex items-start gap-2 text-sm">
-                    <span className="text-pink-400 font-bold">•</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Education & Certs Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="relative bg-gray-800/40 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 hover:border-purple-500/50 shadow-xl transition-all duration-300 group"
-            >
-              <div className="flex items-center mb-6">
-                <FaGraduationCap className="w-6 h-6 text-purple-400 mr-3" />
-                <h3 className="text-xl font-bold text-white">Education & Certs</h3>
-              </div>
-              <div className="mb-6">
-                <h4 className="text-sm font-bold text-purple-400 uppercase mb-2">B.E. Computer Science</h4>
-                <p className="text-gray-300 text-sm">Visvesvaraya Technological University</p>
-                <p className="text-gray-400 text-xs">Graduated July 2025 | CGPA: 7.93</p>
+              <div>
+                <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent mb-3">
+                  Education
+                </h3>
+                <p className="font-display text-lg font-semibold tracking-tight">
+                  B.E. Computer Science
+                </p>
+                <p className="text-mute text-sm mt-1">Visvesvaraya Technological University</p>
+                <p className="font-mono text-xs text-mute mt-3">Graduated July 2025 | CGPA 7.93</p>
               </div>
               <div>
-                <h4 className="text-sm font-bold text-pink-400 uppercase mb-3">Certifications</h4>
-                <ul className="space-y-3">
-                  {certifications.map((cert, i) => (
-                    <li key={i} className="text-gray-300 flex items-start gap-2 text-sm">
-                      <span className="text-pink-400 font-bold">✓</span>
+                <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent mb-3">
+                  Certifications
+                </h3>
+                <ul className="space-y-2">
+                  {certifications.map((cert) => (
+                    <li key={cert} className="text-mute text-sm">
                       {cert}
                     </li>
                   ))}

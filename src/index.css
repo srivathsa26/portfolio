@@ -3,44 +3,118 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-gray-900 text-gray-100;
+    @apply bg-canvas text-ink font-sans antialiased;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    background-image:
+      radial-gradient(ellipse 70% 45% at 85% -10%, rgba(26, 95, 255, 0.09), transparent 55%),
+      radial-gradient(ellipse 50% 35% at 0% 90%, rgba(12, 12, 14, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-accent/20 text-ink;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-accent;
   }
 }
 
 @layer components {
-  .section-padding {
-    @apply py-20 px-4 md:px-8 lg:px-16;
-  }
-  
   .container-custom {
-    @apply max-w-7xl mx-auto;
+    @apply max-w-content mx-auto px-5 sm:px-8 lg:px-12;
   }
-  
-  .heading-primary {
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold;
+
+  .section-pad {
+    @apply py-28 md:py-36;
   }
-  
-  .heading-secondary {
-    @apply text-3xl md:text-4xl font-bold;
+
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.2em] text-mute;
   }
-  
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600;
+
+  .display {
+    @apply font-display font-semibold tracking-tightest text-ink text-balance;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl
+      bg-ink text-surface font-medium text-sm
+      transition duration-200 hover:bg-accent active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl
+      border border-ink/15 bg-surface/70 text-ink font-medium text-sm backdrop-blur-sm
+      transition duration-200 hover:border-accent hover:text-accent active:scale-[0.98];
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3.5 rounded-xl bg-surface border border-ink/10
+      text-ink placeholder:text-mute/70 shadow-soft
+      focus:outline-none focus:ring-2 focus:ring-accent/25 focus:border-accent/40
+      transition duration-200;
+  }
+
+  .panel {
+    @apply bg-surface rounded-2xl border border-ink/[0.06] shadow-soft;
   }
 }
 
-/* Custom cursor styles */
-.cursor-dot {
-  @apply fixed w-4 h-4 bg-white rounded-full pointer-events-none mix-blend-difference z-50;
+@layer utilities {
+  .anim-float {
+    animation: float-y 14s ease-in-out infinite;
+  }
+
+  .anim-float-slow {
+    animation: float-y 22s ease-in-out infinite reverse;
+  }
+
+  .anim-marquee {
+    animation: marquee 38s linear infinite;
+  }
 }
 
-.cursor-outline {
-  @apply fixed w-8 h-8 border-2 border-white rounded-full pointer-events-none mix-blend-difference z-50;
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -28px, 0);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .anim-float,
+  .anim-float-slow,
+  .anim-marquee {
+    animation: none !important;
+  }
 }

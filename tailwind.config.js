@@ -1,61 +1,35 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#8B5CF6',
-          dark: '#7C3AED',
-        },
-        secondary: {
-          DEFAULT: '#EC4899',
-          dark: '#DB2777',
+        canvas: "#F3F4F6",
+        surface: "#FFFFFF",
+        ink: "#0C0C0E",
+        mute: "#5E616B",
+        line: "rgba(12,12,14,0.08)",
+        accent: {
+          DEFAULT: "#1A5FFF",
+          soft: "rgba(26,95,255,0.1)",
+          muted: "#1449CC",
         },
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        display: ['"Syne"', "system-ui", "sans-serif"],
+        sans: ['"DM Sans"', "system-ui", "sans-serif"],
+        mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
       },
-      animation: {
-        'gradient-x': 'gradient-x 15s ease infinite',
-        'gradient-y': 'gradient-y 15s ease infinite',
-        'gradient-xy': 'gradient-xy 15s ease infinite',
+      maxWidth: {
+        content: "74rem",
       },
-      keyframes: {
-        'gradient-y': {
-          '0%, 100%': {
-            'background-size': '400% 400%',
-            'background-position': 'center top'
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'center center'
-          }
-        },
-        'gradient-x': {
-          '0%, 100%': {
-            'background-size': '200% 200%',
-            'background-position': 'left center'
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center'
-          }
-        },
-        'gradient-xy': {
-          '0%, 100%': {
-            'background-size': '400% 400%',
-            'background-position': 'left center'
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center'
-          }
-        }
-      }
+      letterSpacing: {
+        tightest: "-0.05em",
+      },
+      boxShadow: {
+        soft: "0 1px 0 rgba(12,12,14,0.04), 0 18px 40px -24px rgba(12,12,14,0.25)",
+      },
     },
   },
   plugins: [],
-} 
+};

@@ -1,103 +1,94 @@
-# Modern Portfolio Website
+# Srivathsa SH — Portfolio
 
-A modern, responsive portfolio website built with React, featuring smooth animations, a custom cursor, and a dark theme. Inspired by Brittany Chiang's portfolio design.
+Personal portfolio of **Srivathsa SH**, Full Stack Developer based in Bengaluru.
+
+Live: [portfolio-six-mu-62.vercel.app](https://portfolio-six-mu-62.vercel.app)
+
+## About
+
+Cool-luxury portfolio showcasing work at Geekonomy Technology and DRDO (CABS), plus projects in full-stack development, automation, NLP, and deep learning.
 
 ## Features
 
-- 🎨 Modern, minimalist design with dark theme
-- 🖱️ Custom animated cursor with hover effects
-- 📱 Fully responsive layout
-- ✨ Smooth animations using Framer Motion
-- 🎯 SEO optimized with meta tags
-- 📝 Contact form
-- 🔗 Social media integration
-- 🎭 Gradient text and button effects
-- 📊 Skills visualization
-- 📅 Experience timeline
-- 🖼️ Project showcase with hover effects
+- Responsive single-page layout (Hero, About, Skills, Experience, Projects, Contact)
+- Motion animations via [Motion Primitives](https://github.com/ibelick/motion-primitives) (`TextEffect`, `Magnetic`, `Spotlight`, `Tilt`, `InfiniteSlider`, `ScrollProgress`)
+- Cool silver canvas theme with Syne / DM Sans / JetBrains Mono
+- Email contact form via EmailJS
+- Resume download and social links (GitHub, LinkedIn)
 
 ## Tech Stack
 
-- React
-- Tailwind CSS
-- Framer Motion
-- React Icons
-- React Scroll
-- React Intersection Observer
+| Area | Tools |
+|------|--------|
+| UI | React 18, Tailwind CSS, Motion |
+| Motion | Motion Primitives, `motion/react` |
+| Icons | React Icons, Heroicons |
+| Contact | EmailJS |
+| Deploy | Vercel |
 
 ## Getting Started
 
-1. Clone the repository:
+### Prerequisites
+
+- Node.js 18+
+- npm (or pnpm)
+
+### Setup
+
 ```bash
-git clone https://github.com/yourusername/portfolio.git
+git clone https://github.com/srivathsa26/portfolio.git
 cd portfolio
-```
-
-2. Install dependencies:
-```bash
 npm install
+cp .env.example .env
 ```
 
-3. Start the development server:
+Fill in EmailJS values in `.env` (see [EmailJS docs](https://www.emailjs.com/docs/)):
+
+```env
+REACT_APP_EMAILJS_SERVICE_ID=your_service_id
+REACT_APP_EMAILJS_TEMPLATE_ID=your_template_id
+REACT_APP_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+On Vercel, set the same variables in **Project Settings → Environment Variables**.
+
+### Run locally
+
 ```bash
 npm start
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Customization
+### Build
 
-### Personal Information
-
-1. Update the content in each component:
-   - `Hero.js`: Update name, role, and introduction
-   - `About.js`: Modify bio and skills
-   - `Experience.js`: Add your work experience
-   - `Projects.js`: Add your projects
-   - `Contact.js`: Update social links and contact information
-
-2. Update meta information in `public/index.html`:
-   - Title
-   - Description
-   - Open Graph tags
-   - Twitter cards
-
-### Styling
-
-1. Colors and gradients:
-   - Modify the gradient colors in `tailwind.config.js`
-   - Update the color scheme in `index.css`
-
-2. Animations:
-   - Adjust animation timings in Framer Motion components
-   - Modify hover effects in the CSS
-
-### Images
-
-1. Replace placeholder images:
-   - Add your profile picture
-   - Add project screenshots
-   - Update favicon and social media preview images
-
-## Deployment
-
-1. Build the project:
 ```bash
 npm run build
 ```
 
-2. Deploy to your preferred hosting service (e.g., Netlify, Vercel, GitHub Pages)
+Static output is written to `build/`.
 
-## Contributing
+## Project Structure
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+```
+src/
+  components/
+    motion-primitives/   # Motion Primitives ports
+    Hero.js, About.js, Skills.js, Experience.js, Projects.js, Contact.js, Navbar.js
+  lib/                   # motion helpers + cn()
+  App.js
+  index.js
+public/                  # resume PDF, photo, favicons
+DESIGN.md                # design tokens and rules
+```
+
+## Customization
+
+- **Content** — edit files under `src/components/`
+- **Design tokens** — `DESIGN.md`, `tailwind.config.js`, `src/index.css`
+- **SEO / meta** — `public/index.html`
+- **Resume** — replace `public/Srivathsa_resume_FSD__25_aug.pdf` and update the Hero download `href` if the filename changes
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Design inspired by [Brittany Chiang's portfolio](https://brittanychiang.com)
-- Icons from [React Icons](https://react-icons.github.io/react-icons/)
-- Animations powered by [Framer Motion](https://www.framer.com/motion/)
+Private personal portfolio. All rights reserved © Srivathsa SH.

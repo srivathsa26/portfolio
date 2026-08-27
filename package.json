@@ -1,7 +1,10 @@
 {
-  "name": "ss",
-  "version": "0.1.0",
+  "name": "srivathsa-portfolio",
+  "version": "1.0.0",
   "private": true,
+  "description": "Personal portfolio of Srivathsa SH — Full Stack Developer",
+  "author": "Srivathsa SH",
+  "homepage": "https://portfolio-six-mu-62.vercel.app",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "7.21.11",
     "@emailjs/browser": "^4.4.1",
@@ -12,7 +15,9 @@
     "autoprefixer": "10.4.17",
     "baseline-browser-mapping": "^2.9.14",
     "caniuse-lite": "^1.0.30001764",
+    "clsx": "^2.1.1",
     "framer-motion": "10.18.0",
+    "motion": "^13.1.1",
     "postcss": "8.4.35",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -20,6 +25,8 @@
     "react-intersection-observer": "9.5.3",
     "react-scripts": "5.0.1",
     "react-scroll": "1.9.0",
+    "react-use-measure": "^2.1.7",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "3.4.1",
     "web-vitals": "2.1.4",
     "yet-another-react-lightbox": "^3.23.2"
