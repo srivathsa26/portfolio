@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 import { Magnetic } from './motion-primitives/magnetic';
 import { fadeUp, stagger } from '../lib/motion';
@@ -43,6 +43,7 @@ const Contact = () => {
   };
 
   const socialLinks = [
+    { icon: FaPhone, url: 'tel:+916363689505', label: 'Phone' },
     { icon: FaGithub, url: 'https://github.com/srivathsa26', label: 'GitHub' },
     { icon: FaLinkedin, url: 'https://www.linkedin.com/in/srivathsa-shrihari-BE-CSE', label: 'LinkedIn' },
     { icon: FaEnvelope, url: 'mailto:Srivathsash26@gmail.com', label: 'Email' },

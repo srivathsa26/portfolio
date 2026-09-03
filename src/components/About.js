@@ -6,26 +6,28 @@ const About = () => {
   const reduce = useReducedMotion();
 
   const whatIDo = [
-    'Building React.js & Next.js apps',
-    'Integrating REST APIs & services',
-    'Debugging request-response issues',
-    'Developing scalable systems',
-    'Database work (Mongo, Postgres)',
+    'React & Next.js frontends in TypeScript',
+    'REST APIs with NestJS, Swagger, and DTO validation',
+    'Full-stack debugging and testing',
+    'CI/CD pipelines with GitHub Actions',
+    'PostgreSQL, TypeORM, and Drizzle ORM',
+    'Auth with JWT and role-based access control',
   ];
 
   const whatIBring = [
-    'Strong debugging and problem-solving',
-    'API integrations and workflow systems',
-    'Cross-stack frontend and backend work',
-    'AI-assisted development',
-    'Reusable component systems',
-    'Performance-minded workflows',
+    'Trace bugs from UI to API to database',
+    'Own features from requirements to shipping',
+    'Switch between frontend and backend daily',
+    'AI-assisted dev with Claude Code and Cursor',
+    'Reusable components and shared UI patterns',
+    'Agile sprints, Linear, Jam, code reviews',
   ];
 
   const certifications = [
-    'Deep Learning & Applications',
-    'Intro to Generative AI',
-    'Prompt Design using Google Vertex AI',
+    'Prompt Design in Vertex AI, Google Cloud',
+    'Gemini for Application Developers, Google',
+    'Gemini for end-to-end SDLC, Google',
+    'Java Basic, HackerRank',
   ];
 
   const listItem = {
@@ -61,11 +63,11 @@ const About = () => {
               variants={fadeUp}
               className="space-y-4 text-mute leading-relaxed max-w-[40ch] text-[17px]"
             >
-              <p>Hands-on experience in full-stack development and AI-assisted systems.</p>
+              <p>I build web and SaaS products end-to-end. Frontend screens, backend APIs, database schemas, deployments.</p>
               <p>
-                Currently at{' '}
-                <span className="text-ink font-medium">Geekonomy Technology</span>, contributing to
-                API integrations and frontend engineering: integrations, debugging, and performance.
+                Right now I'm at{' '}
+                <span className="text-ink font-medium">Geekonomy Technology</span> in Bengaluru,
+                working on Next.js frontends, NestJS APIs, and CI/CD deployments in a 6-7 person Agile team.
               </p>
             </motion.div>
           </div>
@@ -129,10 +131,10 @@ const About = () => {
                   Education
                 </h3>
                 <p className="font-display text-lg font-semibold tracking-tight">
-                  B.E. Computer Science
+                  B.E. in Computer Science & Engineering
                 </p>
-                <p className="text-mute text-sm mt-1">Visvesvaraya Technological University</p>
-                <p className="font-mono text-xs text-mute mt-3">Graduated July 2025 | CGPA 7.93</p>
+                <p className="text-mute text-sm mt-1">Global Academy of Technology, Bengaluru</p>
+                <p className="font-mono text-xs text-mute mt-3">Dec 2021 – Jul 2025 | CGPA 7.93</p>
               </div>
               <div>
                 <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent mb-3">

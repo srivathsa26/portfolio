@@ -95,7 +95,7 @@ const Hero = () => {
             variants={fadeUp}
             className="text-mute text-lg md:text-xl leading-relaxed max-w-[38ch] mb-10"
           >
-            Building scalable web apps and API-driven systems with React, Next.js, Node.js, and AI-assisted workflows.
+            I work across the stack. Next.js and TypeScript on the frontend, NestJS and PostgreSQL on the backend, shipped through CI/CD.
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mb-10">
@@ -106,7 +106,7 @@ const Hero = () => {
             </Magnetic>
             <Magnetic intensity={0.35} range={120}>
               <a
-                href="/Srivathsa_resume_FSD__25_aug.pdf"
+                href="/Srivathsa_resume_sept 2.pdf"
                 download="Srivathsa_Resume.pdf"
                 className="btn-ghost"
               >
