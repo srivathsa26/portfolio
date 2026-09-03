@@ -8,15 +8,16 @@ const Skills = () => {
   const reduce = useReducedMotion();
 
   const skillCategories = [
-    { title: 'Languages', skills: ['JavaScript', 'TypeScript', 'Python'] },
-    { title: 'Frontend', skills: ['React.js', 'Next.js', 'HTML5', 'CSS3', 'Tailwind CSS'] },
-    { title: 'Backend & APIs', skills: ['Node.js', 'Express.js', 'REST APIs', 'API Integration', 'Auth Workflows'] },
-    { title: 'Databases', skills: ['MongoDB', 'PostgreSQL'] },
-    { title: 'DevOps', skills: ['Docker', 'Docker Hub', 'CI/CD Basics', 'Vercel'] },
-    { title: 'Tools', skills: ['Git', 'GitHub', 'Linux', 'VS Code', 'Linear'] },
-    { title: 'Concepts', skills: ['OOP', 'DBMS', 'DSA', 'SDLC', 'Perf. Optimization', 'Sys Integration'] },
-    { title: 'AI / ML', skills: ['Deep Learning', 'Model Training', 'Train/Test Split'] },
-    { title: 'AI Coding Tools', skills: ['Antigravity', 'Cursor AI', 'Claude Code', 'OpenAI Codex'] },
+    { title: 'Languages', skills: ['JavaScript', 'TypeScript', 'Java', 'Python', 'SQL'] },
+    { title: 'Frontend', skills: ['React.js', 'Next.js', 'Angular', 'HTML5', 'CSS3', 'Tailwind CSS', 'Responsive UI'] },
+    { title: 'Backend & APIs', skills: ['Node.js', 'Express.js', 'NestJS', 'REST APIs', 'JWT Auth & RBAC', 'Swagger'] },
+    { title: 'Databases', skills: ['PostgreSQL', 'TypeORM', 'MongoDB (basic)'] },
+    { title: 'DevOps & Cloud', skills: ['Git', 'Docker', 'Vercel', 'GitHub Actions', 'AWS EC2 (Basics)'] },
+    { title: 'Testing & Quality', skills: ['API Testing', 'Responsive Testing', 'UI Testing', 'Integration Testing'] },
+    { title: 'Tools & Practices', skills: ['Figma', 'Linear', 'Claude Code', 'Cursor', 'Agile'] },
+    { title: 'Concepts', skills: ['OOP', 'DBMS', 'DSA', 'SDLC', 'Perf. Optimization', 'Sys Integration'], note: true },
+    { title: 'AI / ML', skills: ['Deep Learning', 'Model Training', 'Train/Test Split'], note: true },
+    { title: 'AI Coding Tools', skills: ['Antigravity', 'Cursor AI', 'Claude Code', 'OpenAI Codex'], note: true },
   ];
 
   const ticker = [
@@ -26,10 +27,10 @@ const Skills = () => {
     'TypeScript',
     'PostgreSQL',
     'Docker',
-    'Python',
-    'MongoDB',
+    'NestJS',
+    'Angular',
     'Tailwind',
-    'AI Agents',
+    'AWS EC2',
   ];
 
   return (
@@ -84,6 +85,11 @@ const Skills = () => {
             <motion.div key={category.title} variants={fadeUp}>
               <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent mb-4">
                 {category.title}
+                {category.note && (
+                  <span className="ml-2 text-[10px] italic text-mute/40 normal-case tracking-normal">
+                    (beyond resume)
+                  </span>
+                )}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {category.skills.map((skill) => (
