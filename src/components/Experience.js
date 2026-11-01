@@ -7,16 +7,14 @@ const Experience = () => {
 
   const experiences = [
     {
-      title: 'Full Stack Developer',
+      title: 'Software Developer',
       company: 'Geekonomy Technology Pvt. Ltd.',
       location: 'Bengaluru',
       duration: 'Apr 2026 - Present',
       points: [
-        'Shipped 50+ UI screens across multiple web and SaaS projects in Next.js and TypeScript.',
-        'Built REST APIs across 20+ backend modules in NestJS with DTO validation and Swagger docs.',
-        'Set up JWT auth and role-based access control with protected routes and scoped permissions.',
-        'Handle features end-to-end: requirements, code, test, debug, ship. Average 3\u20135 per week.',
-        'Run GitHub Actions CI/CD pipelines for builds, validation, and deployments. 6-7 person Agile team.',
+        'Built Next.js frontends for production SaaS products, shipping [ADD METRIC] responsive screens with TypeScript and Tailwind CSS.',
+        'Developed NestJS REST APIs across [ADD METRIC] modules with DTO validation, Swagger documentation, and role-based access control.',
+        'Ran CI/CD deployment pipelines with GitHub Actions in a 6-7 person Agile team, improving release turnaround by [ADD METRIC].',
       ],
     },
     {
@@ -25,7 +23,7 @@ const Experience = () => {
       location: 'Bengaluru',
       duration: 'Oct 2025 - Mar 2026',
       points: [
-        'Worked on Bragi, a multi-tenant SaaS CRM used by 20+ internal users. Schema had 54 tables; I built 3\u20135 of them.',
+        'Worked on Bragi, a multi-tenant SaaS CRM used by 20+ internal users. Schema had 54 tables; I built 3 to 5 of them.',
         'Connected database entities to backend logic, wired up REST APIs between frontend and backend, and tracked down data-flow bugs during QA.',
         'Used Linear for task tracking and Jam for visual bug reports. Worked in Agile sprints alongside QA engineers.',
       ],
@@ -59,7 +57,7 @@ const Experience = () => {
             Experience
           </motion.h2>
           <motion.p variants={fadeUp} className="text-mute text-lg leading-relaxed">
-            Full-stack product work and research internships.
+            Production engineering at Geekonomy Technology and defense research at DRDO.
           </motion.p>
         </motion.div>
 

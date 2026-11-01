@@ -3,8 +3,8 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Experience from './components/Experience';
-import Projects from './components/Projects';
 import Skills from './components/Skills';
+import Projects from './components/Projects';
 import Contact from './components/Contact';
 import { ScrollProgress } from './components/motion-primitives/scroll-progress';
 
@@ -42,7 +42,7 @@ function App() {
         <div className="container-custom flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="font-display text-lg tracking-tight text-ink">Srivathsa</p>
           <p className="font-mono text-xs text-mute tracking-wide">
-            © {new Date().getFullYear()}, Bengaluru
+            &copy; {new Date().getFullYear()}, Bengaluru
           </p>
         </div>
       </motion.footer>

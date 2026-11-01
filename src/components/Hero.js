@@ -5,11 +5,9 @@ import {
   useTransform,
   useReducedMotion,
 } from 'motion/react';
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaFileDownload } from 'react-icons/fa';
 import { Magnetic } from './motion-primitives/magnetic';
-import { TextEffect } from './motion-primitives/text-effect';
 import { Tilt } from './motion-primitives/tilt';
-import { TextShimmer } from './motion-primitives/text-shimmer';
 import { easeOut, stagger, fadeUp } from '../lib/motion';
 
 const Hero = () => {
@@ -20,149 +18,154 @@ const Hero = () => {
     offset: ['start start', 'end start'],
   });
 
-  const photoY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 90]);
-  const photoScale = useTransform(scrollYProgress, [0, 1], reduce ? [1, 1] : [1, 1.1]);
-  const blobY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -60]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, reduce ? 1 : 0.35]);
-
-  const socials = [
-    { icon: FaEnvelope, href: 'mailto:Srivathsash26@gmail.com', label: 'Email' },
-    { icon: FaGithub, href: 'https://github.com/srivathsa26', label: 'GitHub' },
-    { icon: FaLinkedin, href: 'https://www.linkedin.com/in/srivathsa-shrihari-BE-CSE', label: 'LinkedIn' },
-  ];
+  const photoY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 70]);
+  const photoScale = useTransform(scrollYProgress, [0, 1], reduce ? [1, 1] : [1, 1.05]);
+  const blobY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -50]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, reduce ? 1 : 0.4]);
 
   return (
     <section
       id="home"
       ref={sectionRef}
-      className="relative min-h-[100dvh] overflow-hidden"
+      className="relative min-h-[92dvh] lg:min-h-[100dvh] flex items-center overflow-hidden"
     >
+      {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute inset-0 bg-canvas" />
         <motion.div
           style={{ y: blobY }}
-          className="absolute -top-24 right-[-10%] h-[70vh] w-[70vw] rounded-full bg-accent/[0.07] blur-3xl anim-float"
+          className="absolute -top-20 right-[-5%] h-[60vh] w-[60vw] rounded-full bg-accent/[0.08] blur-3xl anim-float"
         />
-        <div className="absolute bottom-[-20%] left-[-15%] h-[55vh] w-[55vw] rounded-full bg-ink/[0.04] blur-3xl anim-float-slow" />
+        <div className="absolute bottom-[-15%] left-[-10%] h-[50vh] w-[50vw] rounded-full bg-ink/[0.03] blur-3xl anim-float-slow" />
         <div
-          className="absolute inset-0 opacity-[0.35]"
+          className="absolute inset-0 opacity-[0.3]"
           style={{
             backgroundImage:
               'linear-gradient(to right, rgba(12,12,14,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(12,12,14,0.04) 1px, transparent 1px)',
-            backgroundSize: '64px 64px',
-            maskImage: 'radial-gradient(ellipse 80% 70% at 50% 40%, black, transparent)',
+            backgroundSize: '56px 56px',
+            maskImage: 'radial-gradient(ellipse 85% 75% at 50% 45%, black, transparent)',
           }}
         />
       </div>
 
       <motion.div
         style={{ opacity: contentOpacity }}
-        className="container-custom relative z-10 grid min-h-[100dvh] grid-cols-1 lg:grid-cols-12 gap-12 items-center py-28 md:py-32"
+        className="container-custom relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center py-24 md:py-28"
       >
+        {/* Left Column: Intro, Headline, Subline, Action Buttons */}
         <motion.div
-          className="lg:col-span-7"
-          variants={stagger(0.1, 0.05)}
+          className="lg:col-span-7 flex flex-col justify-center"
+          variants={stagger(0.08, 0.04)}
           initial={reduce ? false : 'hidden'}
           animate="show"
         >
-          <motion.div variants={fadeUp} className="mb-6">
-            {reduce ? (
-              <p className="eyebrow">Full stack developer, Bengaluru</p>
-            ) : (
-              <TextShimmer as="p" className="eyebrow" duration={2.4}>
-                Full stack developer, Bengaluru
-              </TextShimmer>
-            )}
+          {/* Eyebrow badge */}
+          <motion.div variants={fadeUp} className="mb-5">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-surface/90 border border-ink/10 shadow-sm backdrop-blur-sm">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-mono text-xs font-semibold text-ink">Srivathsa SH</span>
+              <span className="text-mute/40">/</span>
+              <span className="font-mono text-xs text-mute">Full-Stack Engineer</span>
+            </div>
           </motion.div>
 
-          {reduce ? (
-            <h1 className="display text-5xl sm:text-6xl md:text-7xl lg:text-[5.75rem] leading-[1.05] pb-1 mb-7 max-w-[11ch]">
-              Srivathsa SH
-            </h1>
-          ) : (
-            <TextEffect
-              as="h1"
-              per="char"
-              preset="fade-in-blur"
-              className="display text-5xl sm:text-6xl md:text-7xl lg:text-[5.75rem] leading-[1.05] pb-1 mb-7 max-w-[11ch]"
-              speedReveal={1.15}
-            >
-              Srivathsa SH
-            </TextEffect>
-          )}
-
-          <motion.p
+          {/* Headline */}
+          <motion.h1
             variants={fadeUp}
-            className="text-mute text-lg md:text-xl leading-relaxed max-w-[38ch] mb-10"
+            className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.14] tracking-tight text-ink mb-5 max-w-2xl text-balance"
           >
-            I work across the stack. Next.js and TypeScript on the frontend, NestJS and PostgreSQL on the backend, shipped through CI/CD.
-          </motion.p>
+            Full-stack engineer shipping production SaaS: Next.js, NestJS, PostgreSQL.
+          </motion.h1>
 
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mb-10">
-            <Magnetic intensity={0.35} range={120}>
-              <a href="#projects" className="btn-primary">
-                View selected work
-              </a>
-            </Magnetic>
-            <Magnetic intensity={0.35} range={120}>
-              <a
-                href="/Srivathsa_resume_sept 2.pdf"
-                download="Srivathsa_Resume.pdf"
-                className="btn-ghost"
-              >
-                Download resume
-              </a>
-            </Magnetic>
+          {/* Subline */}
+          <motion.div variants={fadeUp} className="space-y-3 mb-8 max-w-xl">
+            <p className="font-mono text-sm sm:text-base text-accent font-medium">
+              Currently at Geekonomy Technology, Bengaluru.
+            </p>
+            <p className="text-mute text-base sm:text-lg leading-relaxed">
+              I work across the stack. Next.js and TypeScript on the frontend, NestJS and PostgreSQL on the backend, shipped through CI/CD.
+            </p>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="flex gap-3">
-            {socials.map((social, i) => (
-              <Magnetic key={social.label} intensity={0.45} range={90}>
-                <motion.a
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  initial={reduce ? false : { opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.45 + i * 0.06, duration: 0.4, ease: easeOut }}
-                  whileHover={reduce ? undefined : { y: -3 }}
-                  whileTap={reduce ? undefined : { scale: 0.96 }}
-                  className="inline-flex p-3 rounded-xl border border-ink/10 bg-surface text-mute hover:text-accent hover:border-accent/40 shadow-soft transition-colors duration-200"
-                >
-                  <social.icon className="w-5 h-5" />
-                </motion.a>
-              </Magnetic>
-            ))}
+          {/* Buttons: Download Resume (PDF), GitHub, LinkedIn, Email */}
+          <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+            <Magnetic intensity={0.25} range={90}>
+              <a
+                href="/Srivathsa_SH_Full_Stack_Developer_Resume_oct.pdf"
+                download="Srivathsa_SH_Full_Stack_Developer_Resume_oct.pdf"
+                className="btn-primary !px-5 !py-3 text-sm font-medium shadow-sm"
+              >
+                <FaFileDownload className="w-4 h-4" />
+                Download Resume (PDF)
+              </a>
+            </Magnetic>
+
+            <Magnetic intensity={0.2} range={80}>
+              <a
+                href="https://github.com/srivathsa26"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost !px-4 !py-3 text-sm font-medium"
+              >
+                <FaGithub className="w-4 h-4" />
+                GitHub
+              </a>
+            </Magnetic>
+
+            <Magnetic intensity={0.2} range={80}>
+              <a
+                href="https://www.linkedin.com/in/srivathsa-shrihari-BE-CSE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost !px-4 !py-3 text-sm font-medium"
+              >
+                <FaLinkedin className="w-4 h-4" />
+                LinkedIn
+              </a>
+            </Magnetic>
+
+            <Magnetic intensity={0.2} range={80}>
+              <a
+                href="mailto:Srivathsash26@gmail.com"
+                className="btn-ghost !px-4 !py-3 text-sm font-medium"
+              >
+                <FaEnvelope className="w-4 h-4" />
+                Email
+              </a>
+            </Magnetic>
           </motion.div>
         </motion.div>
 
+        {/* Right Column: Photo Card */}
         <motion.div
-          initial={reduce ? false : { opacity: 0, scale: 0.94, y: 28 }}
+          initial={reduce ? false : { opacity: 0, scale: 0.95, y: 24 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.85, delay: 0.2, ease: easeOut }}
+          transition={{ duration: 0.8, delay: 0.2, ease: easeOut }}
           className="lg:col-span-5 flex justify-center lg:justify-end"
         >
           <Tilt
-            rotationFactor={reduce ? 0 : 8}
-            className="relative w-full max-w-md aspect-[4/5]"
+            rotationFactor={reduce ? 0 : 6}
+            className="relative w-full max-w-[360px] sm:max-w-md aspect-[4/5]"
           >
             <motion.div
               aria-hidden="true"
-              className="absolute -inset-3 rounded-3xl border border-accent/20"
+              className="absolute -inset-2.5 rounded-3xl border border-accent/25"
               initial={reduce ? false : { opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.35, ease: easeOut }}
+              transition={{ duration: 0.85, delay: 0.3, ease: easeOut }}
             />
-            <div className="relative h-full w-full overflow-hidden rounded-2xl border border-ink/[0.06] shadow-soft bg-surface">
+            <div className="relative h-full w-full overflow-hidden rounded-2xl border border-ink/[0.08] shadow-soft bg-surface">
               <motion.img
                 src="/srivathsa photo.jpg"
-                alt="Srivathsa SH"
+                alt="Srivathsa SH, Full-stack software developer based in Bengaluru"
                 className="h-full w-full object-cover will-change-transform"
                 loading="eager"
+                width={400}
+                height={500}
+                fetchpriority="high"
                 style={{ y: photoY, scale: photoScale }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/20 via-transparent to-transparent pointer-events-none" />
             </div>
           </Tilt>
         </motion.div>

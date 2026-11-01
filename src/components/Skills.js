@@ -8,29 +8,47 @@ const Skills = () => {
   const reduce = useReducedMotion();
 
   const skillCategories = [
-    { title: 'Languages', skills: ['JavaScript', 'TypeScript', 'Java', 'Python', 'SQL'] },
-    { title: 'Frontend', skills: ['React.js', 'Next.js', 'Angular', 'HTML5', 'CSS3', 'Tailwind CSS', 'Responsive UI'] },
-    { title: 'Backend & APIs', skills: ['Node.js', 'Express.js', 'NestJS', 'REST APIs', 'JWT Auth & RBAC', 'Swagger'] },
-    { title: 'Databases', skills: ['PostgreSQL', 'TypeORM', 'MongoDB (basic)'] },
-    { title: 'DevOps & Cloud', skills: ['Git', 'Docker', 'Vercel', 'GitHub Actions', 'AWS EC2 (Basics)'] },
-    { title: 'Testing & Quality', skills: ['API Testing', 'Responsive Testing', 'UI Testing', 'Integration Testing'] },
-    { title: 'Tools & Practices', skills: ['Figma', 'Linear', 'Claude Code', 'Cursor', 'Agile'] },
-    { title: 'Concepts', skills: ['OOP', 'DBMS', 'DSA', 'SDLC', 'Perf. Optimization', 'Sys Integration'], note: true },
-    { title: 'AI / ML', skills: ['Deep Learning', 'Model Training', 'Train/Test Split'], note: true },
-    { title: 'AI Coding Tools', skills: ['Antigravity', 'Cursor AI', 'Claude Code', 'OpenAI Codex'], note: true },
+    {
+      title: 'Frontend',
+      skills: ['React', 'Next.js', 'TypeScript', 'JavaScript', 'Angular', 'HTML5', 'CSS3', 'Tailwind CSS'],
+    },
+    {
+      title: 'Backend',
+      skills: ['NestJS', 'Node.js', 'Express.js', 'REST APIs'],
+    },
+    {
+      title: 'Databases',
+      skills: ['PostgreSQL', 'Supabase', 'MongoDB', 'type ORM'],
+    },
+    {
+      title: 'DevOps & Cloud',
+      skills: ['CI/CD', 'Render', 'Vercel', 'deployments with SSL.'],
+    },
+    {
+      title: 'AI/ML',
+      skills: ['Python', 'CNN', 'Faster R-CNN', 'Deep Learning', 'NLP', 'LLMs', 'Google Vertex AI', 'Gemini'],
+    },
+    {
+      title: 'Automation',
+      skills: ['n8n', 'cron jobs', 'MCP integrations', 'Telegram/Discord bots'],
+    },
+    {
+      title: 'Practices',
+      skills: ['Agile', 'role-based access control', 'Git'],
+    },
   ];
 
   const ticker = [
     'React',
     'Next.js',
-    'Node.js',
+    'NestJS',
     'TypeScript',
     'PostgreSQL',
-    'Docker',
-    'NestJS',
-    'Angular',
-    'Tailwind',
-    'AWS EC2',
+    'Supabase',
+    'Tailwind CSS',
+    'CI/CD',
+    'Python',
+    'n8n',
   ];
 
   return (
@@ -49,7 +67,7 @@ const Skills = () => {
           <p className="eyebrow mb-5">Skills</p>
           <h2 className="display text-4xl md:text-5xl mb-4 leading-[1.05]">Technical stack</h2>
           <p className="text-mute text-lg leading-relaxed">
-            Languages, frameworks, and tooling I use day to day.
+            Languages, frameworks, databases, and tools grouped by domain.
           </p>
         </InView>
       </div>
@@ -79,17 +97,16 @@ const Skills = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-14"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-10 gap-y-12"
         >
           {skillCategories.map((category) => (
-            <motion.div key={category.title} variants={fadeUp}>
-              <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent mb-4">
+            <motion.div
+              key={category.title}
+              variants={fadeUp}
+              className="p-6 rounded-2xl border border-ink/[0.07] bg-surface/70 shadow-sm"
+            >
+              <h3 className="font-mono text-xs uppercase tracking-[0.18em] text-accent font-semibold mb-4">
                 {category.title}
-                {category.note && (
-                  <span className="ml-2 text-[10px] italic text-mute/40 normal-case tracking-normal">
-                    (beyond resume)
-                  </span>
-                )}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {category.skills.map((skill) => (
@@ -98,10 +115,10 @@ const Skills = () => {
                     whileHover={
                       reduce
                         ? undefined
-                        : { y: -3, borderColor: 'rgba(26,95,255,0.35)', color: '#0C0C0E' }
+                        : { y: -2, borderColor: 'rgba(26,95,255,0.4)', color: '#0C0C0E' }
                     }
                     transition={{ type: 'spring', stiffness: 400, damping: 22 }}
-                    className="font-mono text-xs text-mute bg-canvas border border-ink/[0.07] rounded-lg px-3 py-1.5 cursor-default"
+                    className="inline-flex items-center font-mono text-xs text-mute bg-canvas border border-ink/[0.08] rounded-lg px-3 py-1.5 transition-colors cursor-default"
                   >
                     {skill}
                   </motion.span>

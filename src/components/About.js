@@ -134,7 +134,7 @@ const About = () => {
                   B.E. in Computer Science & Engineering
                 </p>
                 <p className="text-mute text-sm mt-1">Global Academy of Technology, Bengaluru</p>
-                <p className="font-mono text-xs text-mute mt-3">Dec 2021 – Jul 2025 | CGPA 7.93</p>
+                <p className="font-mono text-xs text-mute mt-3">Dec 2021 to Jul 2025 | CGPA 7.93</p>
               </div>
               <div>
                 <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent mb-3">

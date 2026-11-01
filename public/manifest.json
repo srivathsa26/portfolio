@@ -1,7 +1,7 @@
 {
   "short_name": "Srivathsa",
-  "name": "Srivathsa SH | Full Stack Developer",
-  "description": "Portfolio of Srivathsa SH — Full Stack Developer",
+  "name": "Srivathsa SH | Full-Stack Software Developer",
+  "description": "Portfolio of Srivathsa SH, full-stack software developer at Geekonomy Technology, Bengaluru",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#6d28d9",
-  "background_color": "#111827"
+  "theme_color": "#F3F4F6",
+  "background_color": "#F3F4F6"
 }
